@@ -17,12 +17,16 @@ async function listener() {
             console.log('Received webhook data:', data);
 
             // Procesa los datos del webhook
-            if (data.set === 'trade') {
+            if (data.set === "trade") {
                 const symbol = data.symbol;
                 const side = data.side;
-                const positionSide = data.positionSide;
-                const type = data.type;
-
+                let positionSide;
+                const type = "MARKET";    
+                if(side === "BUY"){
+                    positionSide = "LONG";  
+                }else{
+                    positionSide = "SHORT";
+                }    
                 // Ejecutar la orden en el broker
                 tradeOrder(symbol, side, positionSide, type);
             }
