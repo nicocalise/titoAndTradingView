@@ -1,28 +1,39 @@
-const axios = require('axios');
+const bodyParser = require('body-parser');
 const { tradeOrder } = require('../ApiRequest/tradeOrder');
 
-async function handleWebhook(req, res) {
-    const data = req.body;
-    console.log('Received webhook data:', data);
+const express = require('express');
+const app = express();
 
-    // Procesa los datos del webhook
-    if (data.set === "trade") {
-        const symbol = data.symbol;
-        const side = data.side;
-        let positionSide;
-        const type = "MARKET";
-        if (side === "BUY") {
-            positionSide = "LONG";
-        } else {
-            positionSide = "SHORT";
+// Middleware para analizar el cuerpo de la solicitud en formato JSON
+app.use(bodyParser.json());
+
+const handleWebhook = async (req, res) => {
+    try {
+        const data = req.body;
+        console.log('Received webhook data:', data);
+
+        // Procesa los datos del webhook
+        if (data.set === "trade") {
+            const symbol = data.symbol;
+            const side = data.side;
+            let positionSide;
+            const type = "MARKET";    
+            if (side === "BUY") {
+                positionSide = "LONG";  
+            } else {
+                positionSide = "SHORT";
+            }    
+            // Ejecutar la orden en el broker
+            await tradeOrder(symbol, side, positionSide, type);
         }
-        // Ejecutar la orden en el broker
-        await tradeOrder(symbol, side, positionSide, type);
-    }
 
-    // Responder a TradingView
-    res.status(200).json({ status: 'success' });
-}
+        // Responder a TradingView
+        res.status(200).json({ status: 'success' });
+    } catch (error) {
+        console.error('Error processing webhook:', error);
+        res.status(500).json({ status: 'error', message: error.message });
+    }
+};
 
 module.exports = {
     handleWebhook
