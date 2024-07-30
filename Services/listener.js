@@ -11,7 +11,7 @@ async function listener() {
     app.use(bodyParser.json());
 
     // Endpoint para recibir el webhook
-    app.post('/webhook', async (req, res) => {
+    app.post('/api/webhook', async (req, res) => {
         try {
             const data = req.body;
             console.log('Received webhook data:', data);
