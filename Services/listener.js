@@ -28,11 +28,12 @@ const handleWebhook = async (req, res) => {
         }
 
         // Responder a TradingView
-        res.status(200).json({ status: 'success' });
+        res.status(200).json({ status: 'success' , data});
     } catch (error) {
         console.error('Error processing webhook:', error);
         res.status(500).json({ status: 'error', message: error.message });
     }
+
 };
 
 module.exports = {
