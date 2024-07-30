@@ -52,6 +52,7 @@ const tradeOrder = (symbol, side, positionSide, type) => {
         console.log("path:", path)
         console.log("parameters:", getParameters(API, timestamp))
         console.log("sign:", sign)
+        console.log("apiKey", API_KEY)
         console.log(method, url)
         const config = {
             method: method,
@@ -67,7 +68,6 @@ const tradeOrder = (symbol, side, positionSide, type) => {
         const resp = await axios(config);
         console.log(resp.status);
         console.log(resp.data);
-        resp.status(API_KEY, API_SECRET);
     }
 }
 
