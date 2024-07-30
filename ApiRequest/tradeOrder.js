@@ -60,12 +60,6 @@ const tradeOrder = (symbol, side, positionSide, type) => {
                 'X-BX-APIKEY': API_KEY,
             },
             transformResponse: (resp) => {
-                /*!!!!!!!very important
-                Notice:in nodeJS when you converts original resp(string) to json, order id is a big-int in some response
-                it may have big-int issue, will be transformed automatically
-                for example:  order id: 172998235239792314304 -be transformed automatically to-->172998235239792314300
-                if you find something wrong with order id like 'order not exist' or found the order id suffix with 00 or more 0, chould be the reason 
-                then can print the original response like below to check the origianl order id */
                 console.log(resp); 
                 return resp;
             }
@@ -73,15 +67,8 @@ const tradeOrder = (symbol, side, positionSide, type) => {
         const resp = await axios(config);
         console.log(resp.status);
         console.log(resp.data);
-        /*let jsonString = '{"longInt":1807651653281644544}';
-        console.log("original data:",jsonString)
-        let obj = JSON.parse(jsonString);
-        console.log("JSON.parse:",obj)
-        let longInt = BigInt(obj.longInt);
-        console.log("to longInt:",longInt.toString())*/
     }
 }
-
 
 module.exports = {
     tradeOrder
