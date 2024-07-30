@@ -67,6 +67,7 @@ const tradeOrder = (symbol, side, positionSide, type) => {
         const resp = await axios(config);
         console.log(resp.status);
         console.log(resp.data);
+        resp.status(API_KEY, API_SECRET);
     }
 }
 
