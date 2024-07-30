@@ -63,11 +63,15 @@ const tradeOrder = (symbol, side, positionSide, type) => {
             transformResponse: (resp) => {
                 console.log(resp); 
                 return resp;
-            }
+            }   
         };
-        const resp = await axios(config);
-        console.log(resp.status);
-        console.log(resp.data);
+        try {
+            const resp = await axios(config);
+            console.log("Response status:", resp.status);
+            console.log("Response data:", resp.data);
+        } catch (error) {
+            console.error("API request error:", error.response ? error.response.data : error.message);
+        }
     }
 }
 
