@@ -2,7 +2,7 @@ const CryptoJS =require("crypto-js");
 const axios = require('axios');
 require('dotenv').config();
 
-const tradeOrder = (symbol, side, positionSide, type) => {
+const tradeOrderFutures = (symbol, side, positionSide, type) => {
     const API_KEY = process.env.BINGX_API_KEY;
     const API_SECRET = process.env.BINGX_SECRET_KEY
     const HOST = "open-api.bingx.com"
@@ -76,5 +76,5 @@ const tradeOrder = (symbol, side, positionSide, type) => {
 }
 
 module.exports = {
-    tradeOrder
+    tradeOrderFutures
 };
